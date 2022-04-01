@@ -96,22 +96,25 @@ Write your solution here.
 Given an input signal x[n], suppose we have two output signals y_1[n] and
 y_2[n], given by the difference equations:
 
-$$
-y_1[n] = x[n - 1] + x[n] + x[n + 1] \\
+```
+y_1[n] = x[n - 1] + x[n] + x[n + 1]
 y_2[n] = y_2[n - 2] + y_2[n - 1] + x[n]
-$$
+```
 
 Which calculation do you expect will have an easier and faster implementation on
 the GPU, and why?
+
+Write your solution here.
 
 ## 2.2
 In class, we discussed how the exponential moving average (EMA), in comparison
 to the simple moving average (SMA), is much less suited for parallelization on the GPU. 
 
 Recall that the EMA is given by:
-$$
+
+```
 y[n] = c * x[n] + (1 - c) * y[n - 1]
-$$
+```
 
 Suppose that c is close to 1, and we only require an approximation to y[n]. How
 can we get this approximation in a way that is parallelizable? (Explain in
@@ -121,6 +124,7 @@ Hint: If c is close to 1, then 1 - c is close to 0. If you expand the recurrence
 relation a bit, what happens to the contribution (to y[n]) of the terms y[n - k]
 as k increases?
 
+Write your solution here.
 
 # Question 3: Small-Kernel Convolution (50 points)
 
@@ -132,15 +136,15 @@ impulse as input.
 
 We can then find y[n] by computing the convolution, which we denote (*):
 
-$$
-    y[n] = (x (*) h)[n]
-$$
+```
+y[n] = (x (*) h)[n]
+```
+
 (See Friday's lecture slides for an expanded definition.)
 
 The goal is to GPU-accelerate this computation. Similar to how we handled the
 addition problem, we allocate and copy memory as appropriate, and we can use the
 strategies in Lecture 2 to divide indicies among our many threads.
-
 
 ## To do:
 
