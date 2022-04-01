@@ -24,7 +24,6 @@ void test1() {
     printf("%d\n", *a);
 }
 ```
-Write your solution here.
 
 ## 1.2
 Creates two integer pointers and sets the values to which they point to 2 and 3,
