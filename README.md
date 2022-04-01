@@ -44,7 +44,6 @@ void test2() {
     *b = 3;
 }
 ```
-Write your solution here.
 
 ## 1.3
 Allocates an array of 1000 integers, and for i = 0, ..., 999, sets the i-th
@@ -62,7 +61,6 @@ void test3() {
         *(i + a) = i;
 }
 ```
-Write your solution here.
 
 ## 1.4
 Creates a two-dimensional array of size 3x100, and sets element (1,1) (counting
@@ -74,8 +72,6 @@ void test4() {
     a[1][1] = 5;
 }
 ```
-Write your solution here.
-
 
 ## 1.5
 Sets the value pointed to by a to an input, checks if the value pointed to by a
@@ -89,7 +85,6 @@ void test5() {
         printf("Value is 0\n");
 }
 ```
-Write your solution here.
 
 # Question 2: Parallelization (30 points)
 ## 2.1
@@ -103,8 +98,6 @@ y_2[n] = y_2[n - 2] + y_2[n - 1] + x[n]
 
 Which calculation do you expect will have an easier and faster implementation on
 the GPU, and why?
-
-Write your solution here.
 
 ## 2.2
 In class, we discussed how the exponential moving average (EMA), in comparison
@@ -123,8 +116,6 @@ words, optionally along with pseudocode or equations.)
 Hint: If c is close to 1, then 1 - c is close to 0. If you expand the recurrence
 relation a bit, what happens to the contribution (to y[n]) of the terms y[n - k]
 as k increases?
-
-Write your solution here.
 
 # Question 3: Small-Kernel Convolution (50 points)
 
