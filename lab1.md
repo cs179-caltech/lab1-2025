@@ -1,21 +1,8 @@
-CS 179: GPU Computing
-Lab 1: Introduction to CUDA
-Updated by: Loko Kung, 2018
+# CS 179: GPU Computing
+## Lab 1: Introduction to CUDA
+**Due: Tuesday, April 5, 2022 - 3:00 PM**
 
-Due: Wednesday, April 11, 2018 - 3:00 PM
-
-Submission:
-Include your written answers in the supplied README file. Submit these answers,
-as well as your code, by e-mail to cs179.ta@gmail.com. Package your files in a
-standard archive format (e.g. zip, tar.gz, tar.bz2). Please use the following
-format for the subject line of the email:
-    [CS179 Lab n] FirstName LastName
-Example:
-    [CS179 Lab 1] Loko Kung
-
-================================================================================
-Question 1: Common Errors (20 points)
-================================================================================
+# Question 1: Common Errors (20 points)
 This class will make heavy use of low-level C constructs and concepts,
 especially pointers and memory management. 
 
@@ -26,24 +13,24 @@ with the code, and how it should be fixed.
 (Many of these problems allude to common errors encountered while writing both
 GPU and CPU code.)
 
---------------------------------------------------------------------------------
-1.1
---------------------------------------------------------------------------------
+# 1.1
 Creates an integer pointer, sets the value to which it points to 3, adds 2 to
 this value, and prints said value.
 
+```c
 void test1() {
     int *a = 3;
     *a = *a + 2;
     printf("%d\n", *a);
 }
+```
+Write your solution here.
 
---------------------------------------------------------------------------------
-1.2
---------------------------------------------------------------------------------
+## 1.2
 Creates two integer pointers and sets the values to which they point to 2 and 3,
 respectively.
 
+```c
 void test2() {
     int *a, b;
     a = (int *) malloc(sizeof (int));
@@ -56,13 +43,14 @@ void test2() {
     *a = 2;
     *b = 3;
 }
+```
+Write your solution here.
 
---------------------------------------------------------------------------------
-1.3
---------------------------------------------------------------------------------
+## 1.3
 Allocates an array of 1000 integers, and for i = 0, ..., 999, sets the i-th
 element to i.
 
+```c
 void test3() {
     int i, *a = (int *) malloc(1000);
 
@@ -73,56 +61,57 @@ void test3() {
     for (i = 0; i < 1000; i++)
         *(i + a) = i;
 }
+```
+Write your solution here.
 
---------------------------------------------------------------------------------
-1.4
---------------------------------------------------------------------------------
+## 1.4
 Creates a two-dimensional array of size 3x100, and sets element (1,1) (counting
 from 0) to 5.
 
+```c
 void test4() {
     int **a = (int **) malloc(3 * sizeof (int *));
     a[1][1] = 5;
 }
+```
+Write your solution here.
 
---------------------------------------------------------------------------------
-1.5
---------------------------------------------------------------------------------
+
+## 1.5
 Sets the value pointed to by a to an input, checks if the value pointed to by a
 is 0, and prints a message if it is.
 
+```c
 void test5() {
     int *a = (int *) malloc(sizeof (int));
     scanf("%d", a);
     if (!a)
         printf("Value is 0\n");
 }
+```
+Write your solution here.
 
-
-================================================================================
-Question 2: Parallelization (30 points)
-================================================================================
-
---------------------------------------------------------------------------------
-2.1
---------------------------------------------------------------------------------
+# Question 2: Parallelization (30 points)
+## 2.1
 Given an input signal x[n], suppose we have two output signals y_1[n] and
-y_2[n], given by the difference equations: 
-		y_1[n] = x[n - 1] + x[n] + x[n + 1]
-		y_2[n] = y_2[n - 2] + y_2[n - 1] + x[n]
+y_2[n], given by the difference equations:
+
+$$
+y_1[n] = x[n - 1] + x[n] + x[n + 1] \\
+y_2[n] = y_2[n - 2] + y_2[n - 1] + x[n]
+$$
 
 Which calculation do you expect will have an easier and faster implementation on
 the GPU, and why?
 
---------------------------------------------------------------------------------
-2.2
---------------------------------------------------------------------------------
+## 2.2
 In class, we discussed how the exponential moving average (EMA), in comparison
-to the simple moving average (SMA), is much less suited for parallelization on
-the GPU. 
+to the simple moving average (SMA), is much less suited for parallelization on the GPU. 
 
 Recall that the EMA is given by:
-	y[n] = c * x[n] + (1 - c) * y[n - 1]
+$$
+y[n] = c * x[n] + (1 - c) * y[n - 1]
+$$
 
 Suppose that c is close to 1, and we only require an approximation to y[n]. How
 can we get this approximation in a way that is parallelizable? (Explain in
@@ -133,12 +122,9 @@ relation a bit, what happens to the contribution (to y[n]) of the terms y[n - k]
 as k increases?
 
 
-================================================================================
-Question 3: Small-Kernel Convolution (50 points)
-================================================================================
+# Question 3: Small-Kernel Convolution (50 points)
 
-Introduction:
-------------------
+## Introduction:
 On Friday, we saw that the effect of a linear time-invariant system on an input
 signal x[n] (to produce an output y[n]) can be summarized by the system's
 impulse response h[n]. This is the output of the system in response to a unit
@@ -146,8 +132,9 @@ impulse as input.
 
 We can then find y[n] by computing the convolution, which we denote (*):
 
-	y[n] = (x (*) h)[n]
-
+$$
+    y[n] = (x (*) h)[n]
+$$
 (See Friday's lecture slides for an expanded definition.)
 
 The goal is to GPU-accelerate this computation. Similar to how we handled the
@@ -155,24 +142,23 @@ addition problem, we allocate and copy memory as appropriate, and we can use the
 strategies in Lecture 2 to divide indicies among our many threads.
 
 
-To do:
-------------------
+## To do:
+
 Complete the GPU-accelerated convolution by filling in the parts marked TODO in
 blur.cu.
 
 
-Assignment notes:
-------------------
+## Assignment notes:
 The code given to you will run the ordinary CPU version of the convolution, and
 compare the GPU/CPU speedup and the correctness of the GPU output. The default
 is currently set to convolve the starting signal with a Gaussian kernel.
 
 There are two output binaries:
 
-	noaudio-blur: Generate the input signal x[n] randomly, with a size
+1. noaudio-blur: Generate the input signal x[n] randomly, with a size
                       specified in the arguments.
 
-	audio-blur: Read the input signal x[n] from an input audio file, and
+2. audio-blur: Read the input signal x[n] from an input audio file, and
                     write the signal y[n] as an output audio file.
 
 The default 'make all' will make both binaries.
@@ -188,15 +174,12 @@ As of: 4/5/2015
 On haru (haru.caltech.edu), you should get a speedup of ~6-8x, using a
 reasonable choice of block size and #blocks (e.g. 512, 200). 
 
-
-Hints:
-------------------
+## Hints:
 - The CPU code exists already (in blur.cpp somewhere in the mess); use it as a
   guide! Recall that we often accelerate CPU code by replacing it with
   "similar-looking" GPU code!
 
 
-Technical details:
-------------------
+## Technical details:
 - For UNIX development: To use audio mode, you'll need to install libsndfile.
 	- On Ubuntu, you can use "sudo apt-get install libsndfile1-dev".
