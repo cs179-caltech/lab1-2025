@@ -184,8 +184,7 @@ Because convolving with the Gaussian kernel acts as an imperfect low-pass
 filter, the output file (in audio mode) will have its higher frequencies
 attenuated. Try it out!
 
-As of: 4/5/2015
-On haru (haru.caltech.edu), you should get a speedup of ~6-8x, using a
+On RTX A5000 (titan.caltech.edu in 2025), you should get a speedup of ~20x, using a
 reasonable choice of block size and #blocks (e.g. 512, 200). 
 
 

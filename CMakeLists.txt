@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.24)  # for CUDA architecture native
 project(lab1 LANGUAGES CXX CUDA)
 
 find_package(CUDAToolkit REQUIRED)
