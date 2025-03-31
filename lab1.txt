@@ -177,7 +177,7 @@ There are two output binaries:
                     write the signal y[n] as an output audio file.
 
 The project uses CMake for building.
-Run `mkdir build`, `cd build`, `make` to build.
+For example, run: `mkdir build`, `cd build`, `cmake ..`, `make`.
 For more details on CMake, see https://hsf-training.github.io/hsf-training-cmake-webpage/02-building/index.html
 
 Because convolving with the Gaussian kernel acts as an imperfect low-pass
