@@ -50,6 +50,7 @@ float cuda_call_blur_kernel(const unsigned int blocks,
     //       has n_frames elements. Then copy the data in raw_data into the
     //       GPU memory you allocated.
     float* gpu_raw_data;
+    // ALWAYS use checkCuda (or your own error checking function) for every cuda call
 
     // TODO: Allocate GPU memory for the impulse signal (for now global GPU
     //       memory is fine. The data is of type float and has blur_v_size
