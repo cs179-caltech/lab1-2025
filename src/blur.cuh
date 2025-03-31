@@ -13,11 +13,12 @@
 // This function will conduct the convolution for a particular thread index
 // given all the other inputs. (See how this function is called in blur.cu
 // to get an understanding of what it should do.
-CUDA_CALLABLE
-void cuda_blur_kernel_convolution(uint thread_index, const float* gpu_raw_data,
-                                  const float* gpu_blur_v, float* gpu_out_data,
-                                  const unsigned int n_frames,
-                                  const unsigned int blur_v_size);
+CUDA_CALLABLE void cuda_blur_kernel_convolution(int thread_index,
+                                                float* gpu_raw_data,
+                                                float* gpu_blur_v,
+                                                float* gpu_out_data,
+                                                int n_frames,
+                                                int blur_v_size);
 
 // This function will be called from the host code to invoke the kernel
 // function. Any memory address/pointer locations passed to this function

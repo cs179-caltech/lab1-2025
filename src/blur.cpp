@@ -183,7 +183,10 @@ int large_gauss_test(int argc, char **argv) {
         memset(output_data_host, 0, n_frames * sizeof (float));
 
         // Use the CUDA machinery for recording time
-        clock_t cpu_start = clock();
+        cudaEvent_t start_cpu, stop_cpu;
+        cudaEventCreate(&start_cpu);
+        cudaEventCreate(&stop_cpu);
+        cudaEventRecord(start_cpu);
         	
         // (For scoping)
         {
@@ -198,8 +201,8 @@ int large_gauss_test(int argc, char **argv) {
         }
 
         // Stop timer
-        clock_t cpu_end = clock();
-        double cpu_time_milliseconds = 1000 * ((double)(cpu_end - cpu_start) / CLOCKS_PER_SEC);
+        cudaEventRecord(stop_cpu);
+        cudaEventSynchronize(stop_cpu);
 
         // GPU blurring
         cout << "GPU blurring..." << endl;
@@ -236,6 +239,9 @@ int large_gauss_test(int argc, char **argv) {
 
         if (success)
             cout << endl << "Successful output" << endl;
+
+        float cpu_time_milliseconds;
+        cudaEventElapsedTime(&cpu_time_milliseconds, start_cpu, stop_cpu);
 
         cout << endl;
         cout << "CPU time: " << cpu_time_milliseconds << " milliseconds" << endl;
