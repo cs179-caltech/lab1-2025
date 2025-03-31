@@ -1,19 +1,10 @@
-/* 
- * CUDA blur
- * Kevin Yuh, 2014 
- * Revised by Nailen Matschke, 2016
- * Revised by Loko Kung, 2018
- */
-
-#ifndef BLUR_DEVICE_CUH
-#define BLUR_DEVICE_CUH
-
-#include "cuda_header.cuh"
+#pragma once
 
 // This function will conduct the convolution for a particular thread index
 // given all the other inputs. (See how this function is called in blur.cu
 // to get an understanding of what it should do.
-CUDA_CALLABLE void cuda_blur_kernel_convolution(int thread_index,
+__device__
+void cuda_blur_kernel_convolution(int thread_index,
                                                 float* gpu_raw_data,
                                                 float* gpu_blur_v,
                                                 float* gpu_out_data,
@@ -33,5 +24,3 @@ float cuda_call_blur_kernel(const unsigned int blocks,
                             float *out_data,
                             const unsigned int n_frames,
                             const unsigned int blur_v_size);
-
-#endif

@@ -1,18 +1,9 @@
-/* 
- * CUDA blur
- * Kevin Yuh, 2014 
- * Revised by Nailen Matschke, 2016
- * Revised by Loko Kung, 2018
- */
-
 #include "blur.cuh"
-
+#include "ErrorCheck.cuh"
 #include <cstdio>
 #include <cuda_runtime.h>
 
-#include "cuda_header.cuh"
-
-CUDA_CALLABLE
+__device__
 void cuda_blur_kernel_convolution(uint thread_index, const float* gpu_raw_data,
                                   const float* gpu_blur_v, float* gpu_out_data,
                                   const unsigned int n_frames,
@@ -50,9 +41,9 @@ float cuda_call_blur_kernel(const unsigned int blocks,
     // Use the CUDA machinery for recording time
     cudaEvent_t start_gpu, stop_gpu;
     float time_milli = -1;
-    cudaEventCreate(&start_gpu);
-    cudaEventCreate(&stop_gpu);
-    cudaEventRecord(start_gpu);
+    checkCuda(cudaEventCreate(&start_gpu));
+    checkCuda(cudaEventCreate(&stop_gpu));
+    checkCuda(cudaEventRecord(start_gpu));
 
     // TODO: Allocate GPU memory for the raw input data (either audio file
     //       data or randomly generated data. The data is of type float and
@@ -74,11 +65,8 @@ float cuda_call_blur_kernel(const unsigned int blocks,
     // TODO: Appropriately call the kernel function.
 
     // Check for errors on kernel call
-    cudaError err = cudaGetLastError();
-    if (cudaSuccess != err)
-        fprintf(stderr, "Error %s\n", cudaGetErrorString(err));
-    else
-        fprintf(stderr, "No kernel error detected\n");
+    // Always include an error check after every kernel call
+    checkCuda(cudaGetLastError());
 
     // TODO: Now that kernel calls have finished, copy the output signal
     //       back from the GPU to host memory. (We store this channel's result
@@ -88,8 +76,8 @@ float cuda_call_blur_kernel(const unsigned int blocks,
     //       GPU resources.
 
     // Stop the recording timer and return the computation time
-    cudaEventRecord(stop_gpu);
-    cudaEventSynchronize(stop_gpu);
-    cudaEventElapsedTime(&time_milli, start_gpu, stop_gpu);
+    checkCuda(cudaEventRecord(stop_gpu));
+    checkCuda(cudaEventSynchronize(stop_gpu));
+    checkCuda(cudaEventElapsedTime(&time_milli, start_gpu, stop_gpu));
     return time_milli;
 }

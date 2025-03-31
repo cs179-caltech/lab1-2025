@@ -5,10 +5,11 @@ include_directories("${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}")
 set(CMAKE_CUDA_ARCHITECTURES native)
 
 set(LAB_SOURCE_FILES
-    src/blur.cpp
-    src/blur.cu
-    src/blur.cuh
-    src/cuda_header.cuh)
+        src/blur.cpp
+        src/blur.cu
+        src/blur.cuh
+        src/ErrorCheck.cuh
+)
 
 add_executable(noaudio-blur "${LAB_SOURCE_FILES}")
 add_executable(audio-blur "${LAB_SOURCE_FILES}")

@@ -176,10 +176,9 @@ There are two output binaries:
 	audio-blur: Read the input signal x[n] from an input audio file, and
                     write the signal y[n] as an output audio file.
 
-The default 'make all' will make both binaries.
-
-Depending on where you are building the binaries, you may need to change the
-CUDA_PATH variable in the Makefile.
+The project uses CMake for building.
+Run `mkdir build`, `cd build`, `make` to build.
+For more details on CMake, see https://hsf-training.github.io/hsf-training-cmake-webpage/02-building/index.html
 
 Because convolving with the Gaussian kernel acts as an imperfect low-pass
 filter, the output file (in audio mode) will have its higher frequencies
@@ -204,5 +203,8 @@ Technical details:
 
 Authors:
 ------------------
-Loko Kung, 2018
-Sam Foxman, 2025
+ * CUDA blur
+ * Kevin Yuh, 2014
+ * Nailen Matschke, 2016
+ * Loko Kung, 2018
+ * Sam Foxman, 2025

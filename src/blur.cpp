@@ -1,10 +1,3 @@
-/* 
- * CUDA blur
- * Kevin Yuh, 2014 
- * Revised by Nailen Matschke, 2016
- * Revised by Loko Kung, 2018
- */
-
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
@@ -12,7 +5,6 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include <time.h>
 
 #include <cuda_runtime.h>
 #include <algorithm>
@@ -31,26 +23,8 @@ const float PI = 3.14159265358979;
 #endif
 
 float gaussian(float x, float mean, float std) {
-    return (1 / (std * sqrt(2 * PI))) 
+    return (1 / (std * sqrt(2 * PI)))
         * exp(-1.0 / 2.0 * pow((x - mean) / std, 2));
-}
-
-/*
- * NOTE: You can use this macro to easily check cuda error codes 
- * and get more information. 
- * 
- * Modified from:
- * http://stackoverflow.com/questions/14038589/
- *   what-is-the-canonical-way-to-check-for-errors-using-the-cuda-runtime-api
- */
-#define gpu_errchk(ans) { gpu_assert((ans), __FILE__, __LINE__); }
-inline void gpu_assert(cudaError_t code, const char *file, int line,
-                       bool abort = true) {
-    if (code != cudaSuccess) {
-        fprintf(stderr, "gpu_assert: %s %s %d\n",
-                cudaGetErrorString(code), file, line);
-        exit(code);
-    }
 }
 
 /* Checks the passed-in arguments for validity. */
