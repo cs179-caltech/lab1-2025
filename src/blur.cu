@@ -4,29 +4,29 @@
 #include <cuda_runtime.h>
 
 __device__
-void cuda_blur_kernel_convolution(uint thread_index, const float* gpu_raw_data,
+void cuda_blur_kernel_convolution(uint raw_data_index, const float* gpu_raw_data,
                                   const float* gpu_blur_v, float* gpu_out_data,
                                   const unsigned int n_frames,
                                   const unsigned int blur_v_size) {
     // TODO: Implement the necessary convolution function that should be
-    //       completed for each thread_index. Use the CPU implementation in
+    //       completed for each raw_data_index. Use the CPU implementation in
     //       blur.cpp as a reference.
 }
 
 __global__
 void cuda_blur_kernel(const float *gpu_raw_data, const float *gpu_blur_v,
                       float *gpu_out_data, int n_frames, int blur_v_size) {
-    // TODO: Compute the current thread index.
-    uint thread_index;
+    // TODO: Compute the current raw_data index.
+    uint raw_data_index;
 
     // TODO: Update the while loop to handle all indices for this thread.
     //       Remember to advance the index as necessary.
     while (false) {
-        // Do computation for this thread index
-        cuda_blur_kernel_convolution(thread_index, gpu_raw_data,
+        // Do computation for this raw_data index
+        cuda_blur_kernel_convolution(raw_data_index, gpu_raw_data,
                                      gpu_blur_v, gpu_out_data,
                                      n_frames, blur_v_size);
-        // TODO: Update the thread index
+        // TODO: Update the raw_data index
     }
 }
 

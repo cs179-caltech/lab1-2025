@@ -162,12 +162,14 @@ int large_gauss_test(int argc, char **argv) {
         cudaEventCreate(&stop_cpu);
         cudaEventRecord(start_cpu);
         	
-        // (For scoping)
+        // CPU Convolution
         {
+            // edge case: clamp to left
             for (int i = 0; i < GAUSSIAN_SIZE; i++) {
                 for (int j = 0; j <= i; j++)
                     output_data_host[i] += input_data[i - j] * blur_v[j]; 
             }
+            // typical case
             for (int i = GAUSSIAN_SIZE; i < n_frames; i++) {
                 for (int j = 0; j < GAUSSIAN_SIZE; j++)
                     output_data_host[i] += input_data[i - j] * blur_v[j]; 
